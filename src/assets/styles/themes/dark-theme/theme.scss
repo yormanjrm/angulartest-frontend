@@ -1,0 +1,22 @@
+@use '@angular/material' as mat;
+@import './palette.scss';
+@include mat.core();
+
+$primary: mat.define-palette($primary-color);
+$accent: mat.define-palette($accent-color);
+$warn: mat.define-palette($warn-color);
+
+$dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+  ),
+  typography: mat.define-typography-config($font-family: "Poppins, sans-serif"),
+  density: 0
+));
+
+body.dark-theme{
+  background-color: #0f0f0f; 
+  @include mat.all-component-themes($dark-theme);
+}
