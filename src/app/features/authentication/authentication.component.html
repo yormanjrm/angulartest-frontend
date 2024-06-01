@@ -1,1 +1,60 @@
-<p>authentication works!</p>
+<main>
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="formLogin" (keyup.enter)="logIn()" class="container">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h2 class="text-center">Users Control</h2>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <input
+                                type="email" 
+                                matInput
+                                placeholder="email"
+                                formControlName="email"
+                                [ngClass]="{'ng-invalid ng-dirty' : formLogin.controls['email'].invalid  &&
+                                                                    (formLogin.controls['email'].dirty ||
+                                                                    formLogin.controls['email'].touched)}"
+                            >
+                            @if (formLogin.controls['email'].invalid  &&
+                                    (formLogin.controls['email'].dirty || formLogin.controls['email'].touched)) {
+                                <mat-error>
+                                    {{formMessageError.getAuthenticationFormMessageError('email', formLogin)}}
+                                </mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <input
+                                type="password"
+                                matInput
+                                placeholder="Password"
+                                formControlName="password"
+                                [ngClass]="{'ng-invalid ng-dirty' : formLogin.controls['password'].invalid  &&
+                                (formLogin.controls['password'].dirty ||
+                                formLogin.controls['password'].touched)}"
+                            >
+                            @if (formLogin.controls['password'].invalid  &&
+                                    (formLogin.controls['password'].dirty || formLogin.controls['password'].touched)) {
+                            <mat-error>
+                                {{formMessageError.getAuthenticationFormMessageError('password', formLogin)}}
+                            </mat-error>
+                        }
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button mat-raised-button color="primary" [disabled]="!formLogin.valid" (click)="logIn()" class="w-100">Log In</button>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</main>
