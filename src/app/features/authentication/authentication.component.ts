@@ -1,16 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
-import { AuthenticationService } from '../../api/authentication/service/authentication.service';
 import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SweetalertService } from '../../core/services/sweetalert.service';
+import { SweetalertService } from '../../shared/services/sweetalert.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../../core/services/storage.service';
 import { FormInitializerService } from '../../shared/services/forms-Initializer.service';
 import { FormsMessageErrorsService } from '../../shared/services/forms-message-errors.service';
 import { Subscription } from 'rxjs';
 import { UnsubscriptionService } from '../../core/services/unsubscription.service';
-import { IToken } from '../../api/authentication/models/token-model';
+import { AuthenticationService } from '../../api/services/authentication.service';
+import { IApiResponse } from '../../core/models/api-response.model';
 
 @Component({
   selector: 'app-authentication',
@@ -38,20 +38,19 @@ export class AuthenticationComponent {
     private sweetAlertService: SweetalertService,
     private router: Router,
     public formMessageError: FormsMessageErrorsService
-  ){}
+  ) { }
 
   ngOnDestroy(): void {
     this.unsubscriptionService.unsubscription(this.suscription);
   }
 
-  logIn(){
+  logIn() {
     this.suscription = this.authenticationService.login(this.formLogin.value.email, this.formLogin.value.password).subscribe({
-      next: (data: IToken) => {
+      next: (data: IApiResponse) => {
         this.sweetAlertService.toastAlert("Welcome back", "success", "bottom");
         this.storageService.setSessionItem('token', data);
         this.router.navigate(['/']);
-      }, error: (err: any) => {
-        console.log(err);
+      }, error: (err: IApiResponse) => {
         this.sweetAlertService.toastAlert(err.message, 'error', "bottom");
       }
     });

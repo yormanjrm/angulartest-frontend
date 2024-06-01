@@ -3,7 +3,7 @@ import { StorageService } from '../services/storage.service';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { SweetalertService } from '../services/sweetalert.service';
+import { SweetalertService } from '../../shared/services/sweetalert.service';
 
 export const expirationTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const storageService = inject(StorageService);

@@ -6,13 +6,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { setAuthorizationHeadersInterceptor } from './core/interceptors/set-authorization-headers.interceptor';
 import { expirationTokenInterceptor } from './core/interceptors/expiration-token.interceptor';
+import { apiResponseInterceptor } from './core/interceptors/api-response.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(
       withFetch(),
-      withInterceptors([setAuthorizationHeadersInterceptor, expirationTokenInterceptor])
+      withInterceptors([setAuthorizationHeadersInterceptor, expirationTokenInterceptor, apiResponseInterceptor])
     ),
     provideAnimationsAsync()
   ]
