@@ -1,1 +1,51 @@
-<p>dashboard works!</p>
+<section class="container-fluid">
+    <article class="row d-flex justify-content-end align-items-end">
+        <div class="col-3 text-end mb-3">
+            <button mat-button >Add user</button>
+        </div>
+        <div class="col-12">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="image">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                    <td mat-cell *matCellDef="let row">
+                        <img src="https://picsum.photos/500" class="img-thumbnail m-2" alt="default.png" width="64">
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+                    <td mat-cell *matCellDef="let row"> {{row.role}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="password">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> password </th>
+                    <td mat-cell *matCellDef="let row" class="password-hidden"> {{row.password | slice:0:8}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="date_created">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date created </th>
+                    <td mat-cell *matCellDef="let row"> {{row.date_created | date: 'dd/MM/yyyy'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                    <td mat-cell *matCellDef="let row"></td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" aria-label="Select page of users"></mat-paginator>
+        </div>
+    </article>
+</section>

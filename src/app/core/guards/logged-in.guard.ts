@@ -1,7 +1,7 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { inject } from '@angular/core';
-import { IToken } from '../../api/models/token-model';
+import { IToken } from '../../api/models/token.model';
 
 export const loggedInGuard: CanActivateFn = (route, state) => {
   const storageService = inject(StorageService);

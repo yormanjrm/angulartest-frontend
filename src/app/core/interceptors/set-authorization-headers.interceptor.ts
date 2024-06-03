@@ -2,7 +2,7 @@ import type { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { StorageService } from '../services/storage.service';
-import { IToken } from '../../api/models/token-model';
+import { IToken } from '../../api/models/token.model';
 
 export const setAuthorizationHeadersInterceptor: HttpInterceptorFn = (req, next) => {
 

@@ -5,7 +5,6 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { setAuthorizationHeadersInterceptor } from './core/interceptors/set-authorization-headers.interceptor';
-import { expirationTokenInterceptor } from './core/interceptors/expiration-token.interceptor';
 import { apiResponseInterceptor } from './core/interceptors/api-response.interceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -13,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withFetch(),
-      withInterceptors([setAuthorizationHeadersInterceptor, expirationTokenInterceptor, apiResponseInterceptor])
+      withInterceptors([setAuthorizationHeadersInterceptor, apiResponseInterceptor])
     ),
     provideAnimationsAsync()
   ]

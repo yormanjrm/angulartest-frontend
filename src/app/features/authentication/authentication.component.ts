@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -26,7 +26,7 @@ import { IApiResponse } from '../../core/models/api-response.model';
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.scss'
 })
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnDestroy {
   public formLogin: FormGroup = this.formInitializerService.initLoginForm();
   private suscription !: Subscription;
 
@@ -46,9 +46,9 @@ export class AuthenticationComponent {
 
   logIn() {
     this.suscription = this.authenticationService.login(this.formLogin.value.email, this.formLogin.value.password).subscribe({
-      next: (data: IApiResponse) => {
+      next: (response: IApiResponse) => {
         this.sweetAlertService.toastAlert("Welcome back", "success", "bottom");
-        this.storageService.setSessionItem('token', data);
+        this.storageService.setSessionItem('token', response.data);
         this.router.navigate(['/']);
       }, error: (err: IApiResponse) => {
         this.sweetAlertService.toastAlert(err.message, 'error', "bottom");
