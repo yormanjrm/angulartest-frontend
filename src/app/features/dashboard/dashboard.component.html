@@ -1,7 +1,7 @@
 <section class="container-fluid">
     <article class="row d-flex justify-content-end align-items-end">
         <div class="col-3 text-end mb-3">
-            <button mat-button >Add user</button>
+            <button mat-button (click)="goToUserForm()">Add user</button>
         </div>
         <div class="col-12">
             <table mat-table [dataSource]="dataSource" matSort>

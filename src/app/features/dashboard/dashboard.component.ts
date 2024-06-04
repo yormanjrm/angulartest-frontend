@@ -10,6 +10,8 @@ import { SweetalertService } from '../../shared/services/sweetalert.service';
 import { DatePipe, SlicePipe } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { StorageService } from '../../core/services/storage.service';
+import { Router } from '@angular/router';
+import { TitleCardService } from '../../core/services/title-card.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,12 +31,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private usersControlService: UsersControlService,
     private storageService: StorageService,
+    private titleCardService: TitleCardService,
     private unsubscriptionService: UnsubscriptionService,
-    private sweetAlertService: SweetalertService
-  ) { }
+    private sweetAlertService: SweetalertService,
+    private router: Router
+  ) {
+    this.titleCardService.titleCard = "Users list";
+  }
 
   ngOnInit(): void {
-    this.storageService.setSessionItem("title-card", "Users")
     this.loadUsers();
   }
 
@@ -51,7 +56,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.sweetAlertService.basicAlert("Empty list", response.message, "info");
         }
       }, error: (err: IApiResponse) => {
-        console.log(err);
         if (err.code != 401) {
           this.sweetAlertService.basicAlert("Error", err.message, "error");
         }
@@ -65,6 +69,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  goToUserForm(id?: number) {
+    if (id) {
+      this.storageService.setSessionItem("iduser", id);
+      this.router.navigate(["/edit-user"]);
+    } else {
+      this.router.navigate(["/new-user"]);
     }
   }
 

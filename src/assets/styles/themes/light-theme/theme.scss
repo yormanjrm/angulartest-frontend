@@ -16,13 +16,15 @@ $light-theme: mat.define-light-theme((color: (primary: $primary,
 body.light-theme {
   background-color: #f6fafa;
   @include mat.all-component-themes($light-theme);
-
-  header {
-    margin-bottom: 2rem;
-  }
   main {
     display: flex;
     justify-content: center;
     align-items: center;
+    mat-card {
+      margin: 1.5rem 0;
+      mat-card-header {
+        padding-bottom: 1.75rem;
+      }
+    }
   }
 }
