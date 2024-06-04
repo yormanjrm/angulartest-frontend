@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { FormInitializerService } from '../../shared/services/forms-Initializer.service';
 import { FormsMessageErrorsService } from '../../shared/services/forms-message-errors.service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { UsersControlService } from '../../api/services/users-control.service';
 import { IApiResponse } from '../../core/models/api-response.model';
 import { IUser } from '../../api/models/user.model';
@@ -17,13 +17,14 @@ import { IUser } from '../../api/models/user.model';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, NgClass],
+  imports: [MaterialModule, ReactiveFormsModule, NgClass, DatePipe],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss'
 })
 export class UserFormComponent implements OnDestroy {
 
   public buttonTitle: string = "";
+  public currentDate: Date | string = new Date;
   public formUser: FormGroup = this.formInitializerService.initUserForm();
   private suscription: Subscription = new Subscription();
 
@@ -74,6 +75,7 @@ export class UserFormComponent implements OnDestroy {
       password: data.password,
       role: data.role
     });
+    this.currentDate = data.date_created;
   }
 
   submitUser() {

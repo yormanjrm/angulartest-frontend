@@ -1,5 +1,9 @@
 <form [formGroup]="formUser" (keyup.enter)="submitUser()" class="container">
+
     <div class="row justify-content-between mb-3">
+        <div class="col-12 text-end">
+            <p><strong class="me-2">Discharge date:</strong>{{currentDate | date: 'dd/MM/yyyy'}}</p>
+        </div>
         <div class="col-6">
             <mat-form-field appearance="outline" class="w-100">
                 <input
