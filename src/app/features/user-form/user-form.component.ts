@@ -10,9 +10,9 @@ import { FormInitializerService } from '../../shared/services/forms-Initializer.
 import { FormsMessageErrorsService } from '../../shared/services/forms-message-errors.service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { MatRadioChange } from '@angular/material/radio';
 import { UsersControlService } from '../../api/services/users-control.service';
 import { IApiResponse } from '../../core/models/api-response.model';
+import { IUser } from '../../api/models/user.model';
 
 @Component({
   selector: 'app-user-form',
@@ -21,43 +21,62 @@ import { IApiResponse } from '../../core/models/api-response.model';
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss'
 })
-export class UserFormComponent implements OnInit, OnDestroy {
+export class UserFormComponent implements OnDestroy {
 
-  private id: number | null = null;
-  public buttonTitle: string;
+  public buttonTitle: string = "";
   public formUser: FormGroup = this.formInitializerService.initUserForm();
-  private suscription !: Subscription;
+  private suscription: Subscription = new Subscription();
 
   constructor(
     private userControlService: UsersControlService,
     private storageService: StorageService,
-    private titleCardService: TitleCardService,
     private unsubscriptionService: UnsubscriptionService,
     private formInitializerService: FormInitializerService,
     public formMessageError: FormsMessageErrorsService,
     private sweetAlertService: SweetalertService,
     private router: Router
   ) {
-    this.id = storageService.getSessionItem("iduser");
-    if (this.id) {
-      this.formUser.setValue({
-        id: this.id,
-      });
-      this.titleCardService.titleCard = "Edit user";
-      this.buttonTitle = "Edit";
-    } else {
-      this.titleCardService.titleCard = "New user";
-      this.buttonTitle = "Register";
-    }
+    const id = storageService.getSessionItem("iduser");
+    this.viewMode(id);
   }
 
-  ngOnInit(): void { }
-
   ngOnDestroy(): void {
+    this.storageService.removeSessionItem("iduser");
     this.unsubscriptionService.unsubscription(this.suscription);
   }
 
-  toDoAction() {
+  viewMode(id: number | null) {
+    if (id === null) {
+      this.buttonTitle = "Register";
+      this.router.navigate(["/new-user"]);
+    } else {
+      this.findUserById(id);
+      this.buttonTitle = "Update";
+    }
+  }
+
+  findUserById(id: number){
+    this.suscription = this.userControlService.findById(id).subscribe({
+      next: (response:IApiResponse) => {
+        this.setUserValues(response.data);
+      }, error: (err: IApiResponse) => {
+        this.sweetAlertService.basicAlert("Error", err.message, "error");
+        this.router.navigate(['/dashboard']);
+      }
+    })
+  }
+
+  setUserValues(data: IUser){
+    this.formUser.patchValue({
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      role: data.role
+    });
+  }
+
+  submitUser() {
     this.suscription = this.userControlService.submitUser(this.formUser).subscribe({
       next: (response: IApiResponse) => {
         this.sweetAlertService.basicAlert("Success", response.message, "success");
@@ -65,7 +84,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
       }, error: (err: IApiResponse) => {
         this.sweetAlertService.basicAlert("Error", err.message, "error");
       }
-    })
+    });
   }
 
 }

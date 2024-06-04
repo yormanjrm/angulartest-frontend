@@ -2,7 +2,7 @@
     <mat-card>
         <mat-card-content>
             <form [formGroup]="formLogin" (keyup.enter)="logIn()" class="container">
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-12">
                         <h2 class="text-center">Users Control</h2>
                     </div>
@@ -13,7 +13,7 @@
                             <input
                                 type="email" 
                                 matInput
-                                placeholder="email"
+                                placeholder="Email"
                                 formControlName="email"
                                 [ngClass]="{'ng-invalid ng-dirty' : formLogin.controls['email'].invalid  &&
                                                                     (formLogin.controls['email'].dirty ||

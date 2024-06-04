@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { UsersControlService } from '../../api/services/users-control.service';
 import { UnsubscriptionService } from '../../core/services/unsubscription.service';
@@ -11,7 +11,7 @@ import { DatePipe, SlicePipe } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { StorageService } from '../../core/services/storage.service';
 import { Router } from '@angular/router';
-import { TitleCardService } from '../../core/services/title-card.service';
+import { IToken } from '../../api/models/token.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,20 +23,23 @@ import { TitleCardService } from '../../core/services/title-card.service';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   public dataSource: MatTableDataSource<IUser> = new MatTableDataSource();
+  public currentUser: IToken;
   public displayedColumns: string[] = ['image', 'name', 'role', 'email', 'password', 'date_created', 'actions'];
-  private suscription !: Subscription;
+  private suscription: Subscription = new Subscription();
 
   @ViewChild(MatPaginator) paginator !: MatPaginator;
 
   constructor(
     private usersControlService: UsersControlService,
     private storageService: StorageService,
-    private titleCardService: TitleCardService,
     private unsubscriptionService: UnsubscriptionService,
     private sweetAlertService: SweetalertService,
     private router: Router
-  ) {
-    this.titleCardService.titleCard = "Users list";
+  ) { 
+    this.currentUser = this.storageService.getSessionItem("token");
+    if(this.currentUser.role === "RECEP"){
+      this.displayedColumns.pop();
+    }
   }
 
   ngOnInit(): void {
@@ -63,15 +66,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   goToUserForm(id?: number) {
     if (id) {
       this.storageService.setSessionItem("iduser", id);
@@ -79,6 +73,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(["/new-user"]);
     }
+  }
+
+  deleteUser(id: number){
+    this.suscription = this.usersControlService.deleteUser(id).subscribe({
+      next: (response: IApiResponse) => {
+        this.sweetAlertService.basicAlert("Success", response.message, "success");
+        this.loadUsers();
+      }, error: (err: IApiResponse) => {
+        this.sweetAlertService.basicAlert("Error", err.message, "error");
+      }
+    });
   }
 
 }

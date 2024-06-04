@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
+import { roleGuard } from '../guards/role.guard';
 
 export const routes: Routes = [
     {
@@ -17,10 +18,12 @@ export const routes: Routes = [
             },
             {
                 path: 'new-user',
+                canActivate: [roleGuard],
                 loadComponent: () => import('../../features/user-form/user-form.component').then(c => c.UserFormComponent)
             },
             {
                 path: 'edit-user',
+                canActivate: [roleGuard],
                 loadComponent: () => import('../../features/user-form/user-form.component').then(c => c.UserFormComponent)
             }
         ]
