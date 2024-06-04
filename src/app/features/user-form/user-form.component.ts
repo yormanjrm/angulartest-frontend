@@ -3,7 +3,6 @@ import { MaterialModule } from '../../shared/modules/material.module';
 import { StorageService } from '../../core/services/storage.service';
 import { UnsubscriptionService } from '../../core/services/unsubscription.service';
 import { Subscription } from 'rxjs';
-import { TitleCardService } from '../../core/services/title-card.service';
 import { SweetalertService } from '../../shared/services/sweetalert.service';
 import { Router } from '@angular/router';
 import { FormInitializerService } from '../../shared/services/forms-Initializer.service';

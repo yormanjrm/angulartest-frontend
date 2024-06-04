@@ -6,11 +6,13 @@ export const routes: Routes = [
     {
         path: '',
         canActivate: [authGuard],
+        title: 'Dashboard',
         loadChildren: () => import('./core/layout/layout.routes').then(r => r.routes),
     },
     {
         path: 'authentication',
         canActivate: [loggedInGuard],
+        title: 'Log in',
         loadComponent: () => import('./features/authentication/authentication.component').then(c => c.AuthenticationComponent)
     },
     {

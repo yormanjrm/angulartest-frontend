@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { HeaderComponent } from './components/header/header.component';
-import { TitleCardService } from '../services/title-card.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'core-layout',
@@ -12,6 +12,4 @@ import { TitleCardService } from '../services/title-card.service';
   styleUrl: './layout.component.scss'
 })
 
-export class LayoutComponent {
-  constructor(public titleCardService: TitleCardService){}
-}
+export class LayoutComponent {}

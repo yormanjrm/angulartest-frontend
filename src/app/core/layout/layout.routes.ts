@@ -14,15 +14,18 @@ export const routes: Routes = [
             },
             {
                 path: 'dashboard',
+                title: 'Dashboard',
                 loadComponent: () => import('../../features/dashboard/dashboard.component').then(c => c.DashboardComponent)
             },
             {
                 path: 'new-user',
+                title: 'New user',
                 canActivate: [roleGuard],
                 loadComponent: () => import('../../features/user-form/user-form.component').then(c => c.UserFormComponent)
             },
             {
                 path: 'edit-user',
+                title: 'Edit user',
                 canActivate: [roleGuard],
                 loadComponent: () => import('../../features/user-form/user-form.component').then(c => c.UserFormComponent)
             }
