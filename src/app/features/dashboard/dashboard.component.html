@@ -10,7 +10,7 @@
                 <ng-container matColumnDef="image">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let row">
-                        <img src="https://picsum.photos/500" class="img-thumbnail m-2" alt="default.png" width="64">
+                        <img src="{{row.image}}" alt="http://localhost:8080/images/default.png" class="img-thumbnail m-2" alt="default.png" width="64">
                     </td>
                 </ng-container>
 

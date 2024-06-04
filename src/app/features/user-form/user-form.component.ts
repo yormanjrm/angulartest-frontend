@@ -23,7 +23,10 @@ import { IUser } from '../../api/models/user.model';
 export class UserFormComponent implements OnDestroy {
 
   public buttonTitle: string = "";
+  public imageText: string = "";
   public currentDate: Date | string = new Date;
+  public previsualizerImg: any;
+  private selectedFile: any = null;
   public formUser: FormGroup = this.formInitializerService.initUserForm();
   private suscription: Subscription = new Subscription();
 
@@ -48,16 +51,18 @@ export class UserFormComponent implements OnDestroy {
   viewMode(id: number | null) {
     if (id === null) {
       this.buttonTitle = "Register";
+      this.imageText = "Load image";
       this.router.navigate(["/new-user"]);
     } else {
       this.findUserById(id);
       this.buttonTitle = "Update";
+      this.imageText = "Replace image";
     }
   }
 
-  findUserById(id: number){
+  findUserById(id: number) {
     this.suscription = this.userControlService.findById(id).subscribe({
-      next: (response:IApiResponse) => {
+      next: (response: IApiResponse) => {
         this.setUserValues(response.data);
       }, error: (err: IApiResponse) => {
         this.sweetAlertService.basicAlert("Error", err.message, "error");
@@ -66,19 +71,32 @@ export class UserFormComponent implements OnDestroy {
     })
   }
 
-  setUserValues(data: IUser){
+  setUserValues(data: IUser) {
     this.formUser.patchValue({
       id: data.id,
       name: data.name,
       email: data.email,
       password: data.password,
-      role: data.role
+      role: data.role,
+      image: data.image
     });
     this.currentDate = data.date_created;
+    this.previsualizerImg = data.image
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previsualizerImg = e.target.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
   }
 
   submitUser() {
-    this.suscription = this.userControlService.submitUser(this.formUser).subscribe({
+    this.suscription = this.userControlService.submitUser(this.formUser, this.selectedFile).subscribe({
       next: (response: IApiResponse) => {
         this.sweetAlertService.basicAlert("Success", response.message, "success");
         this.router.navigate(['/dashboard']);

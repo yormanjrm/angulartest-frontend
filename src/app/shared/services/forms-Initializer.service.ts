@@ -26,7 +26,7 @@ export class FormInitializerService {
 
   initUserForm(): FormGroup {
     return this.fb.group({
-      id: new FormControl<number | null>(null),
+      id: new FormControl<number>(0),
       name: new FormControl<string>('', {
         validators: [
           Validators.required
