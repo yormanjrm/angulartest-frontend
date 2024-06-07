@@ -1,0 +1,30 @@
+@use '@angular/material' as mat;
+@import './palette.scss';
+@include mat.core();
+
+$primary: mat.define-palette($primary-color);
+$accent: mat.define-palette($accent-color);
+$warn: mat.define-palette($warn-color);
+
+$light-theme: mat.define-light-theme((color: (primary: $primary,
+        accent: $accent,
+        warn: $warn,
+      ),
+      typography: mat.define-typography-config($font-family: "Poppins, sans-serif"),
+      density: 0));
+
+body.light-theme {
+  background-color: #f6fafa;
+  @include mat.all-component-themes($light-theme);
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    mat-card {
+      margin: 1.5rem 0;
+      mat-card-header {
+        padding-bottom: 1.75rem;
+      }
+    }
+  }
+}

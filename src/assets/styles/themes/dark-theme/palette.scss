@@ -1,0 +1,74 @@
+$primary-color: (
+  50: #3d1c1c,
+  100: #5a2a2a,
+  200: #7d3a3a,
+  300: #a53d3d,
+  400: #bf4040,
+  500: #ef5b5b,  // Color principal
+  600: #ff7c7c,
+  700: #ff9d9d,
+  800: #ffbfbf,
+  900: #ffe1e1,
+  contrast: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #000000,
+    900: #000000
+  )
+);
+
+$accent-color: (
+  50: #003838,
+  100: #005050,
+  200: #006767,
+  300: #008181,
+  400: #009999,
+  500: #20a39e,  // Color principal
+  600: #3ab5b3,
+  700: #55c8c7,
+  800: #70dbdc,
+  900: #8eeef0,
+  contrast: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #000000,
+    900: #000000
+  )
+);
+
+$warn-color: (
+  50: #3c2c00,
+  100: #5a4500,
+  200: #7d5f00,
+  300: #a57a00,
+  400: #bf8e00,
+  500: #ffba49,  // Color principal
+  600: #ffcd6d,
+  700: #ffdf90,
+  800: #fff1b4,
+  900: #fff3ca,
+  contrast: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #000000,
+    900: #000000
+  )
+);

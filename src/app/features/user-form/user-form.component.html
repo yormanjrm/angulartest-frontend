@@ -1,0 +1,92 @@
+<form [formGroup]="formUser" (keyup.enter)="submitUser()" class="container">
+    <div class="row d-flex justify-content-between align-items-center mb-5">
+        <div class="col-6 text-start">
+            <strong>{{buttonTitle + " user"}}</strong>
+        </div>
+        <div class="col-6 text-end">
+            <strong class="me-2">Date: {{currentDate | date: 'dd/MM/yyyy'}}</strong>
+        </div>
+    </div>
+    <div class="row justify-content-between mb-3">
+        <div class="col-6">
+            <mat-form-field appearance="outline" class="w-100">
+                <input type="text" matInput placeholder="Name" formControlName="name" [ngClass]="{'ng-invalid ng-dirty' : formUser.controls['name'].invalid  &&
+                                                        (formUser.controls['name'].dirty ||
+                                                        formUser.controls['name'].touched)}">
+                @if (formUser.controls['name'].invalid &&
+                (formUser.controls['name'].dirty || formUser.controls['name'].touched)) {
+                <mat-error>
+                    {{formMessageError.getAuthenticationFormMessageError('name', formUser)}}
+                </mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="col-6">
+            <mat-form-field appearance="outline" class="w-100">
+                <input type="email" matInput placeholder="Email" formControlName="email" [ngClass]="{'ng-invalid ng-dirty' : formUser.controls['email'].invalid  &&
+                                                        (formUser.controls['email'].dirty ||
+                                                        formUser.controls['email'].touched)}">
+                @if (formUser.controls['email'].invalid &&
+                (formUser.controls['email'].dirty || formUser.controls['email'].touched)) {
+                <mat-error>
+                    {{formMessageError.getAuthenticationFormMessageError('email', formUser)}}
+                </mat-error>
+                }
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <input type="password" matInput placeholder="Password" formControlName="password" [ngClass]="{'ng-invalid ng-dirty' : formUser.controls['password'].invalid  &&
+                    (formUser.controls['password'].dirty ||
+                    formUser.controls['password'].touched)}">
+                @if (formUser.controls['password'].invalid &&
+                (formUser.controls['password'].dirty || formUser.controls['password'].touched)) {
+                <mat-error>
+                    {{formMessageError.getAuthenticationFormMessageError('password', formUser)}}
+                </mat-error>
+                }
+            </mat-form-field>
+        </div>
+        @if(buttonTitle === "Register"){
+        <div class="col-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <input type="password" matInput placeholder="Confirm password" formControlName="confirmPassword"
+                    [ngClass]="{'ng-invalid ng-dirty' : formUser.controls['confirmPassword'].invalid  &&
+                        (formUser.controls['confirmPassword'].dirty ||
+                        formUser.controls['confirmPassword'].touched)}">
+                @if (formUser.controls['confirmPassword'].invalid &&
+                (formUser.controls['confirmPassword'].dirty || formUser.controls['confirmPassword'].touched)) {
+                <mat-error>
+                    {{formMessageError.getAuthenticationFormMessageError('confirmPassword', formUser)}}
+                </mat-error>
+                }
+            </mat-form-field>
+        </div>
+        }
+    </div>
+    <div class="row mb-3 align-items-center">
+        <div class="col-4">
+            <mat-radio-group formControlName="role">
+                <mat-radio-button value="ADMIN">Administrator</mat-radio-button>
+                <mat-radio-button value="RECEP">Receptionist</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="col-8 text-center">
+            <div class="img-previsualizer">
+                <img src="{{previsualizerImg}}" class="img-thumbnail">
+                <label for="inputFile" class="btn-replace">
+                    {{imageText}}
+                </label>
+                <input type="file" id="inputFile" class="input-file" (change)="onFileSelected($event)">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button mat-raised-button color="primary" [disabled]="!formUser.valid" (click)="submitUser()"
+                class="w-100">{{buttonTitle}}</button>
+        </div>
+    </div>
+</form>

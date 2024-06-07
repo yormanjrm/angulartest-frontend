@@ -1,0 +1,31 @@
+@use '@angular/material' as mat;
+@import './palette.scss';
+@include mat.core();
+
+$primary: mat.define-palette($primary-color);
+$accent: mat.define-palette($accent-color);
+$warn: mat.define-palette($warn-color);
+
+$dark-theme: mat.define-dark-theme((color: (primary: $primary,
+        accent: $accent,
+        warn: $warn,
+      ),
+      typography: mat.define-typography-config($font-family: "Poppins, sans-serif"),
+      density: 0));
+
+body.dark-theme {
+  color: rgba(255, 255, 255, 0.7);
+  background-color: #0F0F0F;
+  @include mat.all-component-themes($dark-theme);
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    mat-card {
+      margin: 1.5rem 0;
+      mat-card-header {
+        padding-bottom: 1.5rem;
+      }
+    }
+  }
+}

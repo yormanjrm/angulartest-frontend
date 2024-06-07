@@ -1,0 +1,28 @@
+.img-previsualizer {
+    position: relative;
+    display: inline-block;
+    max-width: 10rem;
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  
+    .btn-replace {
+      position: absolute;
+      font-size: 0.75rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(150, 150, 150, 0.5);
+      padding: 0.5rem;
+      cursor: pointer;
+      color: white;
+      text-align: center;
+      border-radius: 0.25rem;
+    }
+  
+    .input-file {
+      display: none;
+    }
+  }

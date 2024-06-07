@@ -1,0 +1,15 @@
+<header>
+    <mat-card>
+        <mat-card-content>
+            <div class="user-info-container me-3">
+                <small class="d-block"><strong class="me-2">Name:</strong>{{user.name}}</small>
+                <small class="d-block"><strong class="me-2">Role:</strong>{{user.role}}</small>
+            </div>
+            <div class="log-out-button-container">
+                <button mat-icon-button (click)="logOut()">
+                    <mat-icon>exit_to_app</mat-icon>
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</header>
