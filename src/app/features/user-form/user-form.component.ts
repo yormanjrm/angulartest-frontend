@@ -27,7 +27,7 @@ export class UserFormComponent implements OnDestroy {
   public currentDate: Date | string = new Date;
   public previsualizerImg: any;
   private selectedFile: any = null;
-  public formUser: FormGroup = this.formInitializerService.initUserForm();
+  public formUser: FormGroup;
   private suscription: Subscription = new Subscription();
 
   constructor(
@@ -41,6 +41,7 @@ export class UserFormComponent implements OnDestroy {
   ) {
     const id = storageService.getSessionItem("iduser");
     this.viewMode(id);
+    this.formUser = this.formInitializerService.initUserForm(id);
   }
 
   ngOnDestroy(): void {

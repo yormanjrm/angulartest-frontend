@@ -1,7 +1,10 @@
 <form [formGroup]="formUser" (keyup.enter)="submitUser()" class="container">
-    <div class="row mb-3">
-        <div class="col-12 text-end">
-            <p><strong class="me-2">Discharge date:</strong>{{currentDate | date: 'dd/MM/yyyy'}}</p>
+    <div class="row d-flex justify-content-between align-items-center mb-5">
+        <div class="col-6 text-start">
+            <strong>{{buttonTitle + " user"}}</strong>
+        </div>
+        <div class="col-6 text-end">
+            <strong class="me-2">Date: {{currentDate | date: 'dd/MM/yyyy'}}</strong>
         </div>
     </div>
     <div class="row justify-content-between mb-3">
@@ -46,6 +49,22 @@
                 }
             </mat-form-field>
         </div>
+        @if(buttonTitle === "Register"){
+        <div class="col-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <input type="password" matInput placeholder="Confirm password" formControlName="confirmPassword"
+                    [ngClass]="{'ng-invalid ng-dirty' : formUser.controls['confirmPassword'].invalid  &&
+                        (formUser.controls['confirmPassword'].dirty ||
+                        formUser.controls['confirmPassword'].touched)}">
+                @if (formUser.controls['confirmPassword'].invalid &&
+                (formUser.controls['confirmPassword'].dirty || formUser.controls['confirmPassword'].touched)) {
+                <mat-error>
+                    {{formMessageError.getAuthenticationFormMessageError('confirmPassword', formUser)}}
+                </mat-error>
+                }
+            </mat-form-field>
+        </div>
+        }
     </div>
     <div class="row mb-3 align-items-center">
         <div class="col-4">

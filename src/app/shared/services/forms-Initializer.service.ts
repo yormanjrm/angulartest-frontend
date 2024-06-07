@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,8 @@ export class FormInitializerService {
     });
   }
 
-  initUserForm(): FormGroup {
-    return this.fb.group({
+  initUserForm(isEdit: any): FormGroup {
+    const formGroup = this.fb.group({
       id: new FormControl<number>(0),
       name: new FormControl<string>('', {
         validators: [
@@ -34,7 +34,8 @@ export class FormInitializerService {
       }),
       email: new FormControl<string>('', {
         validators: [
-          Validators.required, Validators.email
+          Validators.required,
+          Validators.email
         ]
       }),
       password: new FormControl<string>('', {
@@ -42,13 +43,30 @@ export class FormInitializerService {
           Validators.required
         ]
       }),
+      confirmPassword: new FormControl<string>('', {
+        validators: isEdit === null ? [Validators.required] : []
+      }),
       role: new FormControl<string>('', {
         validators: [
           Validators.required
         ]
       }),
       image: new FormControl<string>('default.png')
+    }, {
+      validators: isEdit === null ? [this.passwordMatchValidator] : []
     });
+
+    return formGroup;
   }
 
+  private passwordMatchValidator: ValidatorFn = (formGroup: AbstractControl): ValidationErrors | null => {
+    const password = formGroup.get('password');
+    const confirmPassword = formGroup.get('confirmPassword');
+
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      return { passwordMismatch: true };
+    }
+
+    return null;
+  };
 }
